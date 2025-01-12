@@ -7,12 +7,11 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.example.binlist.R
-import org.w3c.dom.Text
+import com.example.binlist.utils.CommonFont
 
 val ProDisplay = FontFamily(
-    Font(resId = R.font.sf_pro_display_regular, weight = FontWeight.Medium),
-    Font(resId = R.font.sf_pro_display_medium, weight = FontWeight.Normal),
+    Font(resId = CommonFont.sf_pro_display_regular, weight = FontWeight.Medium),
+    Font(resId = CommonFont.sf_pro_display_medium, weight = FontWeight.Normal),
 )
 
 @Immutable
