@@ -14,4 +14,5 @@
     <string name="text_country">COUNTRY</string>
     <string name="text_bank">BANK</string>
     <string name="text_bin">BIN</string>
+    <string name="text_binlist">BINLIST</string>
 </resources>
