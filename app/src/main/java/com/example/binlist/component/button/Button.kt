@@ -1,16 +1,19 @@
 package com.example.binlist.component.button
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.binlist.component.progressbar.CircularProgressBar
@@ -53,4 +56,26 @@ fun PrimaryButton(
             }
         }
     }
+}
+
+@Composable
+fun IconButton(
+    icon: Int,
+    contentDescription: Int,
+    onClick: () -> Unit
+) {
+    androidx.compose.material3.IconButton(
+        onClick = { onClick() },
+        colors = IconButtonDefaults.iconButtonColors(
+            contentColor = Color.Transparent
+        ),
+        content = {
+            Image(
+                painter = painterResource(id = icon),
+                contentDescription = stringResource(
+                    contentDescription
+                )
+            )
+        }
+    )
 }
