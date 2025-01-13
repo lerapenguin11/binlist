@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">BINLIST</string>
     <string name="text_lookup">Lookup</string>
+    <string name="text_placeholder">4152 3256</string>
+    <string name="text_label">BIN</string>
+    <string name="text_supporting">Enter the first 6 to 8 digits of a card number (BIN/IIN)</string>
+    <string name="text_search">search</string>
 </resources>
