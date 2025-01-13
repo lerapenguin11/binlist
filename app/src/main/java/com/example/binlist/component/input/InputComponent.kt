@@ -74,12 +74,6 @@ fun InputField(
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewInputField() {
-    InputField(inputText = "") {}
-}
-
 private const val MAX_LINE = 1
 private const val MASK = "XXXX XXXX"
 private const val MASK_NUMBER = 'X'
