@@ -5,4 +5,13 @@
     <string name="text_label">BIN</string>
     <string name="text_supporting">Enter the first 6 to 8 digits of a card number (BIN/IIN)</string>
     <string name="text_search">search</string>
+    <string name="text_important_information">IMPORTANT INFORMATION</string>
+    <string name="text_scheme_network">SCHEME / NETWORK</string>
+    <string name="text_type">TYPE</string>
+    <string name="text_brand">BRAND</string>
+    <string name="text_prepaid">PREPAID</string>
+    <string name="text_card_number">CARD NUMBER</string>
+    <string name="text_country">COUNTRY</string>
+    <string name="text_bank">BANK</string>
+    <string name="text_bin">BIN</string>
 </resources>

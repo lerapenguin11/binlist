@@ -1,6 +1,5 @@
 package com.example.binlist.component.input
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -24,7 +23,7 @@ fun InputField(
     onValueChange: (String) -> Unit
 ) {
     OutlinedTextField(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
         value = inputText,
         onValueChange = { newValue ->
             onValueChange(newValue.take(MASK.count { it == MASK_NUMBER }))
