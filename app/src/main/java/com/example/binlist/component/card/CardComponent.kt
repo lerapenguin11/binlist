@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -27,6 +28,7 @@ fun CardInfo(
     variant: CardInfoVariant
 ) {
     Card(
+        modifier = Modifier.padding(if (variant == CardInfoVariant.SECONDARY) 24.dp else 0.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (variant == CardInfoVariant.PRIMARY)
                 Color.Transparent else BinTheme.colors.quaternary
