@@ -4,10 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.example.binlist.screen.BinScreen
+import androidx.compose.ui.graphics.Color
+import androidx.navigation.compose.rememberNavController
+import com.example.binlist.component.topbar.TopAppBar
+import com.example.binlist.nav.MainGraph
 import com.example.binlist.ui.theme.BinTheme
 
 class MainActivity : ComponentActivity() {
@@ -16,8 +23,26 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BinTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BinScreen(contentPadding = innerPadding)
+                val navController = rememberNavController()
+                Scaffold(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .statusBarsPadding()
+                        .systemBarsPadding(),
+                    containerColor = Color.White,
+                    contentWindowInsets = WindowInsets.statusBars,
+                    topBar = {
+                        TopAppBar(
+                            navController = navController,
+                            containerColor = BinTheme.colors.secondary
+                        )
+                    }
+                )
+                { innerPadding ->
+                    MainGraph(
+                        navController = navController,
+                        contentPadding = innerPadding
+                    )
                 }
             }
         }
