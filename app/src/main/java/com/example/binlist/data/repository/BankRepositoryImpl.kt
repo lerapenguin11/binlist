@@ -29,8 +29,9 @@ class BankRepositoryImpl(
             }
             response.suspendOnError {
                 when (statusCode.code) {
-                    BAD_REQUEST -> ApiResult.BadRequest(error = "Bad request")
-                    NO_DATA -> ApiResult.NoData(error = "No matches found")
+                    BAD_REQUEST -> emit(value = ApiResult.BadRequest(error = "Bad request"))
+                    NO_DATA -> emit(value = ApiResult.NoData(error = "No matches found"))
+                    LIMIT -> emit(value = ApiResult.Limit(error = "Request limit exceeded"))
                 }
             }
         }

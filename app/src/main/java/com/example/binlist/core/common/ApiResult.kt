@@ -5,7 +5,7 @@ enum class ApiStatus {
     ERROR,
     BAD_REQUEST,
     NO_DATA,
-    LOADING
+    LIMIT
 }
 
 sealed class ApiResult<out T>(val status: ApiStatus, val data: T?, val message: String?) {
@@ -34,9 +34,9 @@ sealed class ApiResult<out T>(val status: ApiStatus, val data: T?, val message: 
         message = error
     )
 
-    data class Loading<out R>(val _data: R?, val isLoading: Boolean) : ApiResult<R>(
-        status = ApiStatus.LOADING,
-        data = _data,
-        message = null
+    data class Limit(val error: String?): ApiResult<Nothing>(
+        status = ApiStatus.NO_DATA,
+        data = null,
+        message = error
     )
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.binlist.core.common.ApiResult
 import com.example.binlist.core.common.ApiStatus
+import com.example.binlist.designsystem.component.button.ButtonVariant
 import com.example.binlist.domain.model.bank.BankInfo
 import com.example.binlist.domain.model.bin.Bin
 import com.example.binlist.domain.usecase.GetBankInfo
@@ -32,13 +33,27 @@ class BinViewModel(
             .flatMapLatest { bankInfo ->
                 flow {
                     when (bankInfo.status) {
-                        ApiStatus.SUCCESS -> emit(value = bankInfo.data?.let {
-                            mapper.bankInfoToBankInfoStable(
-                                it
-                            )
-                        })
-                        else -> {}
+                        ApiStatus.SUCCESS -> {
+                            emit(value = bankInfo.data?.let {
+                                mapper.bankInfoToBankInfoStable(
+                                    it
+                                )
+                            })
+                        }
+                        ApiStatus.NO_DATA -> {
+                            _errorMessage.tryEmit(value = bankInfo.message)
+                        }
+                        ApiStatus.BAD_REQUEST -> {
+                            _errorMessage.tryEmit(value = bankInfo.message)
+                        }
+                        ApiStatus.LIMIT -> {
+                            _errorMessage.tryEmit(value = bankInfo.message)
+                        }
+                        ApiStatus.ERROR -> {
+                            _errorMessage.tryEmit(value = bankInfo.message)
+                        }
                     }
+                    updateButtonState(state = ButtonVariant.FILLED)
                 }
             }.stateIn(
                 scope = viewModelScope,
@@ -49,14 +64,28 @@ class BinViewModel(
     private val _bin: MutableStateFlow<String?> = MutableStateFlow(null)
     private val bin: StateFlow<String?> = _bin
 
+    private val _buttonState: MutableStateFlow<ButtonVariant> =
+        MutableStateFlow(ButtonVariant.FILLED)
+    private val buttonState: StateFlow<ButtonVariant> = _buttonState
+
+    private val _errorMessage: MutableStateFlow<String?> = MutableStateFlow(null)
+    private val errorMessage: StateFlow<String?> = _errorMessage
+
     fun getBankInfoFlow() = bankInfo
     fun getBinFlow() = bin
+    fun getButtonStateFlow() = buttonState
+    fun getErrorMessageFlow() = errorMessage
 
     fun loadBankInfo(bin: Bin) = viewModelScope.launch {
-        loadBankInfo.execute(bin = bin)
+        updateButtonState(state = ButtonVariant.LOADING)
+        loadBankInfo.execute(bin = bin) //TODO записывать последний запрос
     }
 
     fun updateBin(bin: String) {
         _bin.update { bin }
+    }
+
+    fun updateButtonState(state: ButtonVariant) {
+        _buttonState.update { state }
     }
 }

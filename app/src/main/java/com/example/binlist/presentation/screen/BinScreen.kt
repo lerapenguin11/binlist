@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,6 +47,8 @@ fun BinScreen(
 ) {
     val bin by binViewModel.getBinFlow().collectAsStateWithLifecycle()
     val bankInfo by binViewModel.getBankInfoFlow().collectAsStateWithLifecycle()
+    val buttonState by binViewModel.getButtonStateFlow().collectAsStateWithLifecycle()
+    val errorMessage by binViewModel.getErrorMessageFlow().collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -68,9 +71,9 @@ fun BinScreen(
                 }
                 Box(modifier = Modifier.padding(vertical = 8.dp)) {
                     SpacerHeight(height = 12.dp)
-                    PrimaryButton(variant = ButtonVariant.FILLED) {
+                    PrimaryButton(variant = buttonState) {
                         bin?.let {
-                            if (it.isNotEmpty()){
+                            if (it.isNotEmpty()) {
                                 binViewModel.loadBankInfo(bin = Bin(bin = it))
                             }
                         }
@@ -88,15 +91,24 @@ fun BinScreen(
         ) {
             Column {
                 SpacerHeight(height = 45.dp)
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    text = stringResource(CommonString.text_important_information),
-                    color = BinTheme.colors.accent,
-                    style = BinTheme.typography.medium16
-                )
-                SpacerHeight(height = 25.dp)
+                errorMessage?.let {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        text = it,
+                        color = BinTheme.colors.accent,
+                        style = BinTheme.typography.medium16
+                    )
+                }
                 bankInfo?.let {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        text = stringResource(CommonString.text_important_information),
+                        color = BinTheme.colors.accent,
+                        style = BinTheme.typography.medium16
+                    )
+                    SpacerHeight(height = 25.dp)
                     CardInfo(
                         variant = CardInfoVariant.PRIMARY,
                         bankInfo = it
