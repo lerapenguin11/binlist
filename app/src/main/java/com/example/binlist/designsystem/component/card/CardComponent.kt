@@ -22,11 +22,13 @@ import com.example.binlist.designsystem.component.card.variant.CardDetailsVarian
 import com.example.binlist.designsystem.component.card.variant.CardInfoVariant
 import com.example.binlist.designsystem.component.spacer.SpacerHeight
 import com.example.binlist.designsystem.ui.theme.BinTheme
+import com.example.binlist.presentation.model.BankInfoStable
 import com.example.binlist.utils.CommonString
 
 @Composable
 fun CardInfo(
     variant: CardInfoVariant,
+    bankInfo: BankInfoStable,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -45,13 +47,15 @@ fun CardInfo(
                 Box(modifier = Modifier.weight(5f)) {
                     CardDetails(
                         cardTitle = stringResource(CommonString.text_scheme_network),
-                        variant = CardDetailsVariant.PRIMARY
+                        variant = CardDetailsVariant.FIRST,
+                        bankInfo = bankInfo
                     )
                 }
                 Box(modifier = Modifier.weight(5f)) {
                     CardDetails(
                         cardTitle = stringResource(CommonString.text_type),
-                        variant = CardDetailsVariant.PRIMARY
+                        variant = CardDetailsVariant.SECOND,
+                        bankInfo = bankInfo
                     )
                 }
             }
@@ -62,13 +66,15 @@ fun CardInfo(
                 Box(modifier = Modifier.weight(5f)) {
                     CardDetails(
                         cardTitle = stringResource(CommonString.text_brand),
-                        variant = CardDetailsVariant.PRIMARY
+                        variant = CardDetailsVariant.THIRD,
+                        bankInfo = bankInfo
                     )
                 }
                 Box(modifier = Modifier.weight(5f)) {
                     CardDetails(
                         cardTitle = stringResource(CommonString.text_prepaid),
-                        variant = CardDetailsVariant.PRIMARY
+                        variant = CardDetailsVariant.FOURTH,
+                        bankInfo = bankInfo
                     )
                 }
             }
@@ -79,13 +85,15 @@ fun CardInfo(
                 Box(modifier = Modifier.weight(5f)) {
                     CardDetails(
                         cardTitle = stringResource(CommonString.text_card_number),
-                        variant = CardDetailsVariant.SECONDARY
+                        variant = CardDetailsVariant.FIFTH,
+                        bankInfo = bankInfo
                     )
                 }
                 Box(modifier = Modifier.weight(5f)) {
                     CardDetails(
                         cardTitle = stringResource(CommonString.text_country),
-                        variant = CardDetailsVariant.TERNARY
+                        variant = CardDetailsVariant.SIXTH,
+                        bankInfo = bankInfo
                     )
                 }
             }
@@ -96,14 +104,16 @@ fun CardInfo(
                 Box(modifier = Modifier.weight(5f)) {
                     CardDetails(
                         cardTitle = stringResource(CommonString.text_bank),
-                        variant = CardDetailsVariant.QUATERNARY
+                        variant = CardDetailsVariant.SEVENTH,
+                        bankInfo = bankInfo
                     )
                 }
                 if (variant == CardInfoVariant.SECONDARY) {
                     Box(modifier = Modifier.weight(5f)) {
                         CardDetails(
                             cardTitle = stringResource(CommonString.text_bin),
-                            variant = CardDetailsVariant.TERNARY
+                            variant = CardDetailsVariant.SIXTH,
+                            bankInfo = bankInfo
                         )
                     }
                 }
@@ -115,7 +125,8 @@ fun CardInfo(
 @Composable
 fun CardDetails(
     variant: CardDetailsVariant,
-    cardTitle: String
+    cardTitle: String,
+    bankInfo: BankInfoStable
 ) {
     Column {
         Text(
@@ -124,20 +135,44 @@ fun CardDetails(
             style = BinTheme.typography.regular12
         )
         when (variant) {
-            CardDetailsVariant.PRIMARY -> {
-                CardPrimary()
+            CardDetailsVariant.FIRST -> {
+                CardPrimary(text = bankInfo.scheme ?: no_data)
             }
 
-            CardDetailsVariant.SECONDARY -> {
-                CardSecondary()
+            CardDetailsVariant.SECOND -> {
+                CardPrimary(text = bankInfo.type ?: no_data)
             }
 
-            CardDetailsVariant.TERNARY -> {
-                CardTernary()
+            CardDetailsVariant.THIRD -> {
+                CardPrimary(text = bankInfo.brand ?: no_data)
             }
 
-            CardDetailsVariant.QUATERNARY -> {
-                CardQuaternary()
+            CardDetailsVariant.FOURTH -> {
+                CardPrimary(text = bankInfo.prepaid?.toString() ?: no_data)
+            }
+
+            CardDetailsVariant.FIFTH -> {
+                CardSecondary(
+                    length = bankInfo.length?.toString() ?: no_data,
+                    lunh = bankInfo.lunh?.toString() ?: no_data
+                )
+            }
+
+            CardDetailsVariant.SIXTH -> {
+                CardTernary(
+                    country = bankInfo.country ?: no_data,
+                    latitude = bankInfo.latitude?.toString() ?: no_data,
+                    longitude = bankInfo.longitude?.toString() ?: no_data
+                )
+            }
+
+            CardDetailsVariant.SEVENTH -> {
+                CardQuaternary(
+                    phone = bankInfo.phone,
+                    nameBank = bankInfo.bankName ?: no_data,
+                    city = bankInfo.city ?: no_data,
+                    url = bankInfo.url
+                )
             }
 
             else -> {}
@@ -146,44 +181,57 @@ fun CardDetails(
 }
 
 @Composable
-fun CardQuaternary() {
+fun CardQuaternary(
+    phone: String?,
+    url: String?,
+    nameBank: String,
+    city: String
+) {
     Text(
-        text = "Jyske Bank, Hjørring",
+        text = "${nameBank}, $city",
         color = Color.Black,
         style = BinTheme.typography.regular16
     )
     SpacerHeight(height = 2.dp)
-    Text(
-        text = "+4589893300",
-        color = Color.Black,
-        style = BinTheme.typography.regular12
-    )
+    phone?.let {
+        Text(
+            text = it,
+            color = Color.Black,
+            style = BinTheme.typography.regular12
+        )
+    }
     SpacerHeight(height = 2.dp)
-    Text(
-        text = "www.jetbank.com",
-        color = BinTheme.colors.primary,
-        style = BinTheme.typography.regular12
-    )
+    url?.let {
+        Text(
+            text = it,
+            color = BinTheme.colors.primary,
+            style = BinTheme.typography.regular12
+        )
+    }
 }
 
 @Composable
-private fun CardTernary() {
+private fun CardTernary(
+    country: String,
+    latitude: String,
+    longitude: String
+) {
     Text(
-        text = "\uD83C\uDDE9\uD83C\uDDF0 Denmark",
+        text = country,
         color = Color.Black,
         style = BinTheme.typography.regular16
     )
     val annotatedString = buildAnnotatedString {
         pushStyle(SpanStyle(color = BinTheme.colors.quaternary))
-        append("(latitude: ")
+        append(stringResource(CommonString.text_country_latitude))
         pushStyle(SpanStyle(color = Color.Black))
-        append("56")
+        append(latitude)
         pop()
-        append(", longitude: ")
+        append(stringResource(CommonString.text_country_longitude))
         pushStyle(SpanStyle(color = Color.Black))
-        append("56")
+        append(longitude)
         pop()
-        append(")")
+        append(stringResource(CommonString.text_right_parenthesis))
         toAnnotatedString()
     }
     Text(text = annotatedString)
@@ -191,29 +239,31 @@ private fun CardTernary() {
 
 @Composable
 private fun CardSecondary(
+    length: String,
+    lunh: String,
     modifier: Modifier = Modifier
 ) {
     Row {
         Column {
             Text(
-                text = "length",
+                text = stringResource(CommonString.text_length),
                 color = BinTheme.colors.quaternary,
                 style = BinTheme.typography.regular10
             )
             Text(
-                text = "16",
+                text = length,
                 color = Color.Black,
                 style = BinTheme.typography.regular16
             )
         }
         Column(modifier = modifier.absoluteOffset(x = 10.dp)) {
             Text(
-                text = "lunh",
+                text = stringResource(CommonString.text_lunh),
                 color = BinTheme.colors.quaternary,
                 style = BinTheme.typography.regular10
             )
             Text(
-                text = "Yes",
+                text = lunh,
                 color = Color.Black,
                 style = BinTheme.typography.regular16
             )
@@ -222,16 +272,35 @@ private fun CardSecondary(
 }
 
 @Composable
-private fun CardPrimary() {
+private fun CardPrimary(text: String) {
     Text(
-        text = "Visa",
+        text = text,
         color = Color.Black,
         style = BinTheme.typography.regular16
     )
 }
 
+private const val no_data = "?"
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewCardDetails() {
-    CardInfo(variant = CardInfoVariant.SECONDARY)
+    CardInfo(
+        variant = CardInfoVariant.SECONDARY,
+        bankInfo = BankInfoStable(
+            scheme = "Visa",
+            type = "debit",
+            length = 16,
+            lunh = true,
+            country = "\uD83C\uDDE9\uD83C\uDDF0 Denmark",
+            phone = "+4589893300",
+            bankName = "Jyske Bank",
+            city = "Hjørring",
+            latitude = 56,
+            longitude = 56,
+            url = "www.jyskebank.dk",
+            brand = null,
+            prepaid = false
+        )
+    )
 }

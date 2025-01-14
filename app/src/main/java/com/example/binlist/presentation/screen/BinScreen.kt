@@ -30,6 +30,7 @@ import com.example.binlist.designsystem.component.card.variant.CardInfoVariant
 import com.example.binlist.designsystem.component.input.InputField
 import com.example.binlist.designsystem.component.spacer.SpacerHeight
 import com.example.binlist.designsystem.ui.theme.BinTheme
+import com.example.binlist.presentation.model.BankInfoStable
 import com.example.binlist.utils.CommonString
 
 @Composable
@@ -82,7 +83,24 @@ fun BinScreen(
                     style = BinTheme.typography.medium16
                 )
                 SpacerHeight(height = 25.dp)
-                CardInfo(variant = CardInfoVariant.PRIMARY)
+                CardInfo(
+                    variant = CardInfoVariant.PRIMARY,
+                    bankInfo = BankInfoStable(
+                        scheme = "Visa",
+                        type = "debit",
+                        length = 16,
+                        lunh = true,
+                        country = "\uD83C\uDDE9\uD83C\uDDF0 Denmark",
+                        phone = "+4589893300",
+                        bankName = "Jyske Bank",
+                        city = "Hjørring",
+                        latitude = 56,
+                        longitude = 56,
+                        url = "www.jyskebank.dk",
+                        brand = null,
+                        prepaid = false
+                    )
+                )
             }
         }
     }
