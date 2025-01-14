@@ -87,6 +87,7 @@ dependencies {
     implementation(libs.moshi.adapters)
     implementation(libs.logging.interceptor)
     implementation(libs.kotlin.coroutines.adapter)
+    implementation(libs.androidx.lifecycle.runtime.compose.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -2,7 +2,7 @@ package com.example.binlist.app
 
 import android.app.Application
 import com.example.binlist.core.network.di.serviceModule
-import com.example.binlist.presentation.di.appModule
+import com.example.binlist.presentation.di.presentationModule
 import com.example.binlist.data.di.dataModule
 import com.example.binlist.domain.di.domainModule
 import org.koin.android.ext.koin.androidContext
@@ -20,7 +20,7 @@ class BaseApplication : Application() {
             androidContext(this@BaseApplication)
             modules(
                 listOf(
-                    appModule,
+                    presentationModule,
                     dataModule,
                     domainModule,
                     serviceModule
