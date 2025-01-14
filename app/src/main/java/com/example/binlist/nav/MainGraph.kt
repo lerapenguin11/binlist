@@ -12,8 +12,8 @@ import com.example.binlist.component.topbar.ProvideAppBarAction
 import com.example.binlist.component.topbar.ProvideAppBarTitle
 import com.example.binlist.component.topbar.TopBarText
 import com.example.binlist.nav.route.Graph
-import com.example.binlist.screen.BinListScreen
-import com.example.binlist.screen.BinScreen
+import com.example.binlist.presentation.screen.BinListScreen
+import com.example.binlist.presentation.screen.BinScreen
 import com.example.binlist.utils.CommonDrawables
 import com.example.binlist.utils.CommonString
 

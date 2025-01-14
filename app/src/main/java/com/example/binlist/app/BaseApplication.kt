@@ -1,6 +1,7 @@
 package com.example.binlist.app
 
 import android.app.Application
+import com.example.binlist.core.network.di.serviceModule
 import com.example.binlist.di.appModule
 import com.example.binlist.di.dataModule
 import com.example.binlist.di.domainModule
@@ -21,7 +22,8 @@ class BaseApplication : Application() {
                 listOf(
                     appModule,
                     dataModule,
-                    domainModule
+                    domainModule,
+                    serviceModule
                 )
             )
         }
