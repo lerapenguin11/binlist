@@ -2,9 +2,9 @@ package com.example.binlist.app
 
 import android.app.Application
 import com.example.binlist.core.network.di.serviceModule
-import com.example.binlist.di.appModule
-import com.example.binlist.di.dataModule
-import com.example.binlist.di.domainModule
+import com.example.binlist.presentation.di.appModule
+import com.example.binlist.data.di.dataModule
+import com.example.binlist.domain.di.domainModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
