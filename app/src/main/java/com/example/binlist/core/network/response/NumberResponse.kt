@@ -1,6 +1,6 @@
 package com.example.binlist.core.network.response
 
-data class Number(
+data class NumberResponse(
     val length: Int,
     val luhn: Boolean
 )

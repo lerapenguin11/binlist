@@ -1,6 +1,6 @@
 package com.example.binlist.core.network.response
 
-data class Bank(
+data class BankResponse(
     val city: String,
     val name: String,
     val phone: String,
