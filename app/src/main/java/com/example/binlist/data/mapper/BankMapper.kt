@@ -11,24 +11,24 @@ class BankMapper {
     fun bankInfoResponseToBankInfo(bankInfo: BankInfoResponse): BankInfo {
         return BankInfo(
             bank = Bank(
-                city = bankInfo.bank.city,
-                name = bankInfo.bank.name,
-                phone = bankInfo.bank.phone,
-                url = bankInfo.bank.url
+                city = bankInfo.bank?.city,
+                name = bankInfo.bank?.name,
+                phone = bankInfo.bank?.phone,
+                url = bankInfo.bank?.url
             ),
             brand = bankInfo.brand,
             country = Country(
-                alpha2 = bankInfo.country.alpha2,
-                name = bankInfo.country.name,
-                numeric = bankInfo.country.numeric,
-                currency = bankInfo.country.currency,
-                latitude = bankInfo.country.latitude,
-                longitude = bankInfo.country.longitude,
-                emoji = bankInfo.country.emoji
+                alpha2 = bankInfo.country?.alpha2,
+                name = bankInfo.country?.name,
+                numeric = bankInfo.country?.numeric,
+                currency = bankInfo.country?.currency,
+                latitude = bankInfo.country?.latitude,
+                longitude = bankInfo.country?.longitude,
+                emoji = bankInfo.country?.emoji
             ),
             number = Number(
-                length = bankInfo.number.length,
-                luhn = bankInfo.number.luhn
+                length = bankInfo.number?.length,
+                luhn = bankInfo.number?.luhn
             ),
             prepaid = bankInfo.prepaid,
             scheme = bankInfo.scheme,

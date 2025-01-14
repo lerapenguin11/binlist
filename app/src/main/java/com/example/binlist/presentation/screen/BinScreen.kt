@@ -70,7 +70,7 @@ fun BinScreen(
                     SpacerHeight(height = 12.dp)
                     PrimaryButton(variant = ButtonVariant.FILLED) {
                         bin?.let {
-                            if (it.length >= 6){
+                            if (it.isNotEmpty()){
                                 binViewModel.loadBankInfo(bin = Bin(bin = it))
                             }
                         }
