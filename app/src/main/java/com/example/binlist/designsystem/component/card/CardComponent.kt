@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.example.binlist.designsystem.component.card.variant.CardDetailsVariant
 import com.example.binlist.designsystem.component.card.variant.CardInfoVariant
 import com.example.binlist.designsystem.component.spacer.SpacerHeight
+import com.example.binlist.designsystem.component.utils.formatString
 import com.example.binlist.designsystem.ui.theme.BinTheme
 import com.example.binlist.presentation.model.BankInfoStable
 import com.example.binlist.utils.CommonString
@@ -29,7 +30,8 @@ import com.example.binlist.utils.CommonString
 fun CardInfo(
     variant: CardInfoVariant,
     bankInfo: BankInfoStable,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    bin: String? = null
 ) {
     Card(
         colors = CardDefaults.cardColors(
@@ -48,14 +50,16 @@ fun CardInfo(
                     CardDetails(
                         cardTitle = stringResource(CommonString.text_scheme_network),
                         variant = CardDetailsVariant.FIRST,
-                        bankInfo = bankInfo
+                        bankInfo = bankInfo,
+                        bin = bin
                     )
                 }
                 Box(modifier = Modifier.weight(5f)) {
                     CardDetails(
                         cardTitle = stringResource(CommonString.text_type),
                         variant = CardDetailsVariant.SECOND,
-                        bankInfo = bankInfo
+                        bankInfo = bankInfo,
+                        bin = bin
                     )
                 }
             }
@@ -67,14 +71,16 @@ fun CardInfo(
                     CardDetails(
                         cardTitle = stringResource(CommonString.text_brand),
                         variant = CardDetailsVariant.THIRD,
-                        bankInfo = bankInfo
+                        bankInfo = bankInfo,
+                        bin = bin
                     )
                 }
                 Box(modifier = Modifier.weight(5f)) {
                     CardDetails(
                         cardTitle = stringResource(CommonString.text_prepaid),
                         variant = CardDetailsVariant.FOURTH,
-                        bankInfo = bankInfo
+                        bankInfo = bankInfo,
+                        bin = bin
                     )
                 }
             }
@@ -86,14 +92,16 @@ fun CardInfo(
                     CardDetails(
                         cardTitle = stringResource(CommonString.text_card_number),
                         variant = CardDetailsVariant.FIFTH,
-                        bankInfo = bankInfo
+                        bankInfo = bankInfo,
+                        bin = bin
                     )
                 }
                 Box(modifier = Modifier.weight(5f)) {
                     CardDetails(
                         cardTitle = stringResource(CommonString.text_country),
                         variant = CardDetailsVariant.SIXTH,
-                        bankInfo = bankInfo
+                        bankInfo = bankInfo,
+                        bin = bin
                     )
                 }
             }
@@ -105,15 +113,17 @@ fun CardInfo(
                     CardDetails(
                         cardTitle = stringResource(CommonString.text_bank),
                         variant = CardDetailsVariant.SEVENTH,
-                        bankInfo = bankInfo
+                        bankInfo = bankInfo,
+                        bin = bin
                     )
                 }
                 if (variant == CardInfoVariant.SECONDARY) {
                     Box(modifier = Modifier.weight(5f)) {
                         CardDetails(
                             cardTitle = stringResource(CommonString.text_bin),
-                            variant = CardDetailsVariant.SIXTH,
-                            bankInfo = bankInfo
+                            variant = CardDetailsVariant.EIGHTH,
+                            bankInfo = bankInfo,
+                            bin = bin
                         )
                     }
                 }
@@ -126,7 +136,8 @@ fun CardInfo(
 fun CardDetails(
     variant: CardDetailsVariant,
     cardTitle: String,
-    bankInfo: BankInfoStable
+    bankInfo: BankInfoStable,
+    bin: String?
 ) {
     Column {
         Text(
@@ -175,13 +186,26 @@ fun CardDetails(
                 )
             }
 
-            else -> {}
+            CardDetailsVariant.EIGHTH -> {
+                CardFivefold(bin = bin)
+            }
         }
     }
 }
 
 @Composable
-fun CardQuaternary(
+private fun CardFivefold(bin: String?) {
+    bin?.let {
+        Text(
+            text = formatString(str = it),
+            color = Color.Black,
+            style = BinTheme.typography.regular16
+        )
+    }
+}
+
+@Composable
+private fun CardQuaternary(
     phone: String?,
     url: String?,
     nameBank: String,
