@@ -3,6 +3,7 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
 }
 
 android {
@@ -87,6 +88,8 @@ dependencies {
     implementation(libs.moshi.adapters)
     implementation(libs.logging.interceptor)
     implementation(libs.kotlin.coroutines.adapter)
+    implementation(libs.android.room)
+    implementation(libs.android.room.runtime)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

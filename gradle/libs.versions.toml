@@ -22,6 +22,7 @@ converter_moshi = "2.9.0"
 moshi = "1.15.0"
 coroutines_adapter = "0.9.2"
 lifecycleRuntimeComposeAndroid = "2.8.7"
+roomVersion = "2.6.1"
 
 
 [libraries]
@@ -56,6 +57,8 @@ kotlin-coroutines-adapter = { module = "com.jakewharton.retrofit:retrofit2-kotli
 sandwich = { module = "com.github.skydoves:sandwich", version.ref = "sandwich" }
 sandwich-retrofit = { module = "com.github.skydoves:sandwich-retrofit", version.ref = "sandwichRetrofit" }
 androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
+android-room = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
+android-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
