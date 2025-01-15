@@ -14,7 +14,6 @@ import com.example.binlist.presentation.mapper.BankInfoStableMapper
 import com.example.binlist.presentation.model.BankInfoStable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -46,6 +45,8 @@ class BinViewModel(
                                 addBankInfo(bankInfo = it)
                             }
                             updateBankInfoState(state = BankInfoUiState.Success)
+
+                            updateButtonState(state = ButtonVariant.FILLED)
                         }
 
                         else -> {
@@ -74,15 +75,25 @@ class BinViewModel(
     private val _bankInfoUIState: MutableStateFlow<BankInfoUiState?> = MutableStateFlow(null)
     private val bankInfoUIState: StateFlow<BankInfoUiState?> = _bankInfoUIState
 
+    private val _lastValueBin = MutableStateFlow<Bin?>(null)
+    private val lastValueBin: StateFlow<Bin?> = _lastValueBin
+
     fun getBankInfoFlow() = bankInfo
     fun getBinFlow() = bin
     fun getButtonStateFlow() = buttonState
     fun getErrorMessageFlow() = errorMessage
     fun getBankInfoUIStateFlow() = bankInfoUIState
 
-    fun loadBankInfo(bin: Bin) = viewModelScope.launch {
-        updateButtonState(state = ButtonVariant.LOADING)
-        loadBankInfo.execute(bin = bin) //TODO записывать последний запрос
+    fun fetchBankInfo(bin: Bin) = viewModelScope.launch {
+        if (lastValueBin.value?.bin != bin.bin) {
+            updateButtonState(state = ButtonVariant.LOADING)
+            loadBankInfo.execute(bin = bin)
+            updateLastValueBin(bin = bin)
+        }
+    }
+
+    private fun updateLastValueBin(bin: Bin) {
+        _lastValueBin.update { bin }
     }
 
     private fun addBankInfo(bankInfo: BankInfo) = viewModelScope.launch {

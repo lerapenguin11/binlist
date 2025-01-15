@@ -22,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.binlist.designsystem.component.button.PrimaryButton
@@ -74,13 +73,12 @@ fun BinScreen(
                     PrimaryButton(variant = buttonState) {
                         bin?.let {
                             if (it.isNotEmpty()) {
-                                binViewModel.loadBankInfo(bin = Bin(bin = it))
+                                binViewModel.fetchBankInfo(bin = Bin(bin = it))
                             }
                         }
                     }
                 }
             }
-
         }
         AnimatedVisibility(
             visible = !bin.isNullOrEmpty(),
@@ -92,12 +90,13 @@ fun BinScreen(
             Column {
                 SpacerHeight(height = 45.dp)
                 bankUiState?.let { uiState ->
-                    when(uiState){
+                    when (uiState) {
                         BankInfoUiState.Success -> {
                             bankInfo?.let {
                                 BankInfoBlock(bankInfo = it)
                             }
                         }
+
                         BankInfoUiState.Error -> {
                             errorMessage?.let {
                                 ErrorMessageBlock(text = it)
@@ -136,10 +135,4 @@ private fun BankInfoBlock(bankInfo: BankInfoStable) {
         bankInfo = bankInfo
     )
     SpacerHeight(height = 25.dp)
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewBinScreen() {
-    BinScreen(contentPadding = PaddingValues())
 }
