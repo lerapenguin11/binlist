@@ -59,6 +59,9 @@ fun CardInfo(
                         bankInfo = bankInfo,
                         bin = bin
                     )
+                    if (it.id == arrayOfCardDetailsVariants.size - 1){
+                        SpacerHeight(height = 30.dp)
+                    }
                 }
             }
         }
