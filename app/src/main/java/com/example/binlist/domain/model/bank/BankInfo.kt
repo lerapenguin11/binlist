@@ -7,5 +7,6 @@ data class BankInfo(
     val number: Number?,
     val prepaid: Boolean?,
     val scheme: String?,
-    val type: String?
+    val type: String?,
+    val bin: String
 )

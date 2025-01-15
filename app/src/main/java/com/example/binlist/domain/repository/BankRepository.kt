@@ -7,4 +7,8 @@ import kotlinx.coroutines.flow.Flow
 interface BankRepository {
 
     fun getBankInfo(bin: String): Flow<ApiResult<BankInfo>>
+
+    suspend fun addBankInfoLocal(bankInfo: BankInfo)
+
+    fun getBankInfoLocal(): Flow<List<BankInfo>>
 }

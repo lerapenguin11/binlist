@@ -21,7 +21,8 @@ class BankInfoStableMapper() {
             longitude = bankInfo.country?.longitude,
             url = bankInfo.bank?.url,
             brand = bankInfo.brand,
-            prepaid = bankInfo.prepaid
+            prepaid = bankInfo.prepaid,
+            bin = bankInfo.bin
         )
     }
 }

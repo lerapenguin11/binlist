@@ -8,7 +8,7 @@ import com.example.binlist.domain.model.bank.Number
 
 class BankMapper {
 
-    fun bankInfoResponseToBankInfo(bankInfo: BankInfoResponse): BankInfo {
+    fun bankInfoResponseToBankInfo(bankInfo: BankInfoResponse, bin: String): BankInfo {
         return BankInfo(
             bank = Bank(
                 city = bankInfo.bank?.city,
@@ -32,7 +32,8 @@ class BankMapper {
             ),
             prepaid = bankInfo.prepaid,
             scheme = bankInfo.scheme,
-            type = bankInfo.type
+            type = bankInfo.type,
+            bin = bin
         )
     }
 }

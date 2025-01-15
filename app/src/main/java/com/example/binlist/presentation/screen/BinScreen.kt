@@ -108,8 +108,7 @@ fun BinScreen(
                     SpacerHeight(height = 25.dp)
                     CardInfo(
                         variant = CardInfoVariant.PRIMARY,
-                        bankInfo = it,
-                        bin = bin
+                        bankInfo = it
                     )
                     SpacerHeight(height = 25.dp)
                 }

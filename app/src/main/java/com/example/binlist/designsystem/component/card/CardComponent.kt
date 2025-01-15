@@ -33,7 +33,6 @@ import com.example.binlist.utils.CommonString
 fun CardInfo(
     variant: CardInfoVariant,
     bankInfo: BankInfoStable,
-    bin: String?,
     modifier: Modifier = Modifier
 ) {
     val arrayOfCardDetailsVariants = CardDetailsVariant.entries.toTypedArray()
@@ -62,7 +61,7 @@ fun CardInfo(
                         cardTitle = stringResource(it.title),
                         variant = it,
                         bankInfo = bankInfo,
-                        bin = bin
+                        bin = bankInfo.bin
                     )
                 }
             }
@@ -250,7 +249,6 @@ private const val grid_count = 2
 fun PreviewCardDetails() {
     CardInfo(
         variant = CardInfoVariant.SECONDARY,
-        bin = "8787 7878",
         bankInfo = BankInfoStable(
             scheme = "Visa",
             type = "debit",
@@ -264,7 +262,8 @@ fun PreviewCardDetails() {
             longitude = 56,
             url = "www.jyskebank.dk",
             brand = null,
-            prepaid = false
+            prepaid = false,
+            bin = "8787 7878"
         )
     )
 }
