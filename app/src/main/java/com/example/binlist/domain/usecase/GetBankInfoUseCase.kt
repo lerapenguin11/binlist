@@ -17,10 +17,6 @@ class GetBankInfoUseCase {
         if (lastValue?.bin != bin.bin) {
             lastValue = bin
             streamBankInfoFromBinParam.tryEmit(value = bin)
-        } else {
-            lastValue?.run {
-                streamBankInfoFromBinParam.tryEmit(value = this)
-            }
         }
     }
 

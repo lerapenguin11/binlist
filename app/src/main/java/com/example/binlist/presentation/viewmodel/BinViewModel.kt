@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.binlist.core.common.ApiStatus
 import com.example.binlist.designsystem.component.button.ButtonVariant
+import com.example.binlist.domain.model.bank.BankInfo
 import com.example.binlist.domain.model.bin.Bin
+import com.example.binlist.domain.usecase.AddBankInfoLocalUseCase
 import com.example.binlist.domain.usecase.GetBankInfo
 import com.example.binlist.domain.usecase.InteractorLoadBankInfo
 import com.example.binlist.presentation.mapper.BankInfoStableMapper
@@ -22,7 +24,8 @@ import kotlinx.coroutines.launch
 class BinViewModel(
     private val loadBankInfo: InteractorLoadBankInfo,
     private val getBankInfo: GetBankInfo,
-    private val mapper: BankInfoStableMapper
+    private val mapper: BankInfoStableMapper,
+    private val addBankInfoLocalUseCase: AddBankInfoLocalUseCase
 ) : ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -37,6 +40,9 @@ class BinViewModel(
                                     it
                                 )
                             })
+                            bankInfo.data?.let {
+                                addBankInfo(bankInfo = it)
+                            }
                         }
 
                         ApiStatus.NO_DATA -> {
@@ -81,6 +87,10 @@ class BinViewModel(
     fun loadBankInfo(bin: Bin) = viewModelScope.launch {
         updateButtonState(state = ButtonVariant.LOADING)
         loadBankInfo.execute(bin = bin) //TODO записывать последний запрос
+    }
+
+    private fun addBankInfo(bankInfo: BankInfo) = viewModelScope.launch {
+        addBankInfoLocalUseCase.execute(bankInfo = bankInfo)
     }
 
     fun updateBin(bin: String) {

@@ -5,19 +5,25 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.binlist.designsystem.component.card.CardInfo
 import com.example.binlist.designsystem.component.card.variant.CardInfoVariant
 import com.example.binlist.designsystem.component.spacer.SpacerHeight
-import com.example.binlist.presentation.model.BankInfoStable
+import com.example.binlist.presentation.viewmodel.BinListViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun BinListScreen(
     contentPadding: PaddingValues,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    binListViewModel: BinListViewModel = koinViewModel()
 ) {
+    val bankInfoList by binListViewModel.getBankInfoFlow().collectAsStateWithLifecycle()
+
     LazyColumn(
         modifier = modifier
             .padding(contentPadding)
@@ -26,25 +32,10 @@ fun BinListScreen(
         item {
             SpacerHeight(height = 20.dp)
         }
-        items(items = listOf(6), key = { it }) { bin ->
+        items(items = bankInfoList, key = { it.id }) { infoStable ->
             CardInfo(
-                bin = "",
                 variant = CardInfoVariant.SECONDARY,
-                bankInfo = BankInfoStable(
-                    scheme = "Visa",
-                    type = "debit",
-                    length = 16,
-                    lunh = true,
-                    country = "\uD83C\uDDE9\uD83C\uDDF0 Denmark",
-                    phone = "+4589893300",
-                    bankName = "Jyske Bank",
-                    city = "Hjørring",
-                    latitude = 56,
-                    longitude = 56,
-                    url = "www.jyskebank.dk",
-                    brand = null,
-                    prepaid = false
-                )
+                bankInfo = infoStable
             )
             SpacerHeight(height = 20.dp)
         }

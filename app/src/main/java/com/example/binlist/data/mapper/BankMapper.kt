@@ -54,11 +54,12 @@ class BankMapper {
             url = bankInfo.url,
             brand = bankInfo.brand,
             prepaid = bankInfo.prepaid,
-            bin = bankInfo.bin
+            bin = bankInfo.bin,
+            id = bankInfo.id
         )
     }
 
-    fun bankInfoToBankInfoEntity(bankInfo: BankDetails): BankInfoEntity {
+    /*fun bankDetailsToBankInfoEntity(bankInfo: BankInfo): BankInfoEntity {
         return BankInfoEntity(
             scheme = bankInfo.scheme,
             type = bankInfo.type,
@@ -71,6 +72,27 @@ class BankMapper {
             latitude = bankInfo.latitude,
             longitude = bankInfo.longitude,
             url = bankInfo.url,
+            brand = bankInfo.brand,
+            prepaid = bankInfo.prepaid,
+            bin = bankInfo.bin
+        )
+    }*/
+
+    fun bankInfoToBankInfoEntity(bankInfo: BankInfo): BankInfoEntity {
+        return BankInfoEntity(
+            scheme = bankInfo.scheme,
+            type = bankInfo.type,
+            length = bankInfo.number?.length,
+            lunh = bankInfo.number?.luhn,
+            country = if (bankInfo.country?.emoji.isNullOrEmpty() && bankInfo.country?.name.isNullOrEmpty())
+                null else
+                "${bankInfo.country?.emoji} ${bankInfo.country?.name}",
+            phone = bankInfo.bank?.phone,
+            bankName = bankInfo.bank?.name,
+            city = bankInfo.bank?.name,
+            latitude = bankInfo.country?.latitude,
+            longitude = bankInfo.country?.longitude,
+            url = bankInfo.bank?.url,
             brand = bankInfo.brand,
             prepaid = bankInfo.prepaid,
             bin = bankInfo.bin

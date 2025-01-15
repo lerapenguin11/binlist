@@ -17,5 +17,6 @@ data class BankInfoStable(
     val url: String?,
     val brand: String?,
     val prepaid: Boolean?,
-    val bin: String
+    val bin: String,
+    val id: Int
 )

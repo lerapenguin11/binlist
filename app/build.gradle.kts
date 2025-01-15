@@ -90,6 +90,7 @@ dependencies {
     implementation(libs.kotlin.coroutines.adapter)
     implementation(libs.android.room)
     implementation(libs.android.room.runtime)
+    kapt(libs.android.room.compiler)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

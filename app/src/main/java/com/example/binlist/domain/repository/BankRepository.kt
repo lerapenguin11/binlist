@@ -9,7 +9,7 @@ interface BankRepository {
 
     fun getBankInfo(bin: String): Flow<ApiResult<BankInfo>>
 
-    suspend fun addBankInfoLocal(bankInfo: BankDetails)
+    suspend fun addBankInfoLocal(bankInfo: BankInfo)
 
     fun getBankInfoLocal(): Flow<List<BankDetails>>
 }

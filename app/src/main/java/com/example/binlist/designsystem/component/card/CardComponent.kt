@@ -26,6 +26,7 @@ import com.example.binlist.designsystem.component.card.variant.CardInfoVariant
 import com.example.binlist.designsystem.component.spacer.SpacerHeight
 import com.example.binlist.designsystem.component.utils.formatString
 import com.example.binlist.designsystem.ui.theme.BinTheme
+import com.example.binlist.presentation.model.BankDetailsStable
 import com.example.binlist.presentation.model.BankInfoStable
 import com.example.binlist.utils.CommonString
 
@@ -263,7 +264,8 @@ fun PreviewCardDetails() {
             url = "www.jyskebank.dk",
             brand = null,
             prepaid = false,
-            bin = "8787 7878"
+            bin = "8787 7878",
+            id = 0
         )
     )
 }

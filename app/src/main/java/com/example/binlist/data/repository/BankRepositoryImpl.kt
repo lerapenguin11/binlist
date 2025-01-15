@@ -51,8 +51,12 @@ class BankRepositoryImpl(
         }.flowOn(context = Dispatchers.IO)
     }
 
-    override suspend fun addBankInfoLocal(bankInfo: BankDetails) = withContext(Dispatchers.IO) {
-        dao.insertBankInfo(bankInfoEntity = mapper.bankInfoToBankInfoEntity(bankInfo))
+    override suspend fun addBankInfoLocal(bankInfo: BankInfo) = withContext(Dispatchers.IO) {
+        dao.insertBankInfo(
+            bankInfoEntity = mapper.bankInfoToBankInfoEntity(
+                bankInfo = bankInfo
+            )
+        )
     }
 
     override fun getBankInfoLocal(): Flow<List<BankDetails>> {

@@ -1,6 +1,9 @@
-package com.example.binlist.domain.model.bank
+package com.example.binlist.presentation.model
 
-data class BankDetails(
+import androidx.compose.runtime.Stable
+
+@Stable
+data class BankDetailsStable(
     val id: Int,
     val scheme: String?,
     val type: String?,
