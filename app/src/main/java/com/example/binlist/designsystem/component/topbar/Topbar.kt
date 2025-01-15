@@ -1,5 +1,6 @@
 package com.example.binlist.designsystem.component.topbar
 
+import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.example.binlist.R
 import com.example.binlist.designsystem.ui.theme.BinTheme
+import com.example.binlist.presentation.nav.Main
 import kotlinx.coroutines.flow.filterNot
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,7 +39,7 @@ fun TopAppBar(
         producer = {
             navController.currentBackStackEntryFlow
                 .filterNot { it.destination is FloatingWindow }
-                .collect { value = it }
+                .collect{ value = it }
         }
     )
     SmallTopAppBar(
@@ -46,22 +48,9 @@ fun TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(containerColor = containerColor),
         navigationIcon = {
             val backPressDispatcher = LocalOnBackPressedDispatcherOwner.current
-            val isBackPress =
-                navController.previousBackStackEntry != null
-
-            if (isBackPress) {
-                Box(Modifier.fillMaxHeight(), contentAlignment = Alignment.Center) {
-                    IconButton(
-                        onClick = {
-                            backPressDispatcher?.onBackPressedDispatcher?.onBackPressed()
-                        },
-                        colors = IconButtonDefaults.iconButtonColors(
-                            contentColor = BinTheme.colors.accent
-                        ),
-                        content = {
-                            Icon(painterResource(id = R.drawable.ic_arrow_back), null)
-                        }
-                    )
+            when {
+                currentContentBackStackEntry?.destination?.route != Main.Bin.route -> {
+                    NavigationIcon(backPressDispatcher = backPressDispatcher)
                 }
             }
         },
@@ -76,4 +65,21 @@ fun TopAppBar(
             }
         }
     )
+}
+
+@Composable
+private fun NavigationIcon(backPressDispatcher: OnBackPressedDispatcherOwner?) {
+    Box(Modifier.fillMaxHeight(), contentAlignment = Alignment.Center) {
+        IconButton(
+            onClick = {
+                backPressDispatcher?.onBackPressedDispatcher?.onBackPressed()
+            },
+            colors = IconButtonDefaults.iconButtonColors(
+                contentColor = BinTheme.colors.accent
+            ),
+            content = {
+                Icon(painterResource(id = R.drawable.ic_arrow_back), null)
+            }
+        )
+    }
 }
