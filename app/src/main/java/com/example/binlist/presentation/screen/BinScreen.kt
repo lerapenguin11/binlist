@@ -32,6 +32,8 @@ import com.example.binlist.designsystem.component.input.InputField
 import com.example.binlist.designsystem.component.spacer.SpacerHeight
 import com.example.binlist.designsystem.ui.theme.BinTheme
 import com.example.binlist.domain.model.bin.Bin
+import com.example.binlist.presentation.model.BankInfoStable
+import com.example.binlist.presentation.viewmodel.BankInfoUiState
 import com.example.binlist.presentation.viewmodel.BinViewModel
 import com.example.binlist.utils.CommonString
 import org.koin.androidx.compose.koinViewModel
@@ -46,6 +48,7 @@ fun BinScreen(
     val bankInfo by binViewModel.getBankInfoFlow().collectAsStateWithLifecycle()
     val buttonState by binViewModel.getButtonStateFlow().collectAsStateWithLifecycle()
     val errorMessage by binViewModel.getErrorMessageFlow().collectAsStateWithLifecycle()
+    val bankUiState by binViewModel.getBankInfoUIStateFlow().collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -80,7 +83,7 @@ fun BinScreen(
 
         }
         AnimatedVisibility(
-            visible = true,
+            visible = !bin.isNullOrEmpty(),
             enter = slideInHorizontally() + expandHorizontally(expandFrom = Alignment.End)
                     + fadeIn(),
             exit = slideOutHorizontally(targetOffsetX = { fullWidth -> fullWidth })
@@ -88,33 +91,51 @@ fun BinScreen(
         ) {
             Column {
                 SpacerHeight(height = 45.dp)
-                errorMessage?.let {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        text = it,
-                        color = BinTheme.colors.accent,
-                        style = BinTheme.typography.medium16
-                    )
-                }
-                bankInfo?.let {
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        text = stringResource(CommonString.text_important_information),
-                        color = BinTheme.colors.accent,
-                        style = BinTheme.typography.medium16
-                    )
-                    SpacerHeight(height = 25.dp)
-                    CardInfo(
-                        variant = CardInfoVariant.PRIMARY,
-                        bankInfo = it
-                    )
-                    SpacerHeight(height = 25.dp)
+                bankUiState?.let { uiState ->
+                    when(uiState){
+                        BankInfoUiState.Success -> {
+                            bankInfo?.let {
+                                BankInfoBlock(bankInfo = it)
+                            }
+                        }
+                        BankInfoUiState.Error -> {
+                            errorMessage?.let {
+                                ErrorMessageBlock(text = it)
+                            }
+                        }
+                    }
                 }
             }
         }
     }
+}
+
+@Composable
+private fun ErrorMessageBlock(text: String) {
+    Text(
+        modifier = Modifier.fillMaxWidth(),
+        textAlign = TextAlign.Center,
+        text = text,
+        color = BinTheme.colors.accent,
+        style = BinTheme.typography.medium16
+    )
+}
+
+@Composable
+private fun BankInfoBlock(bankInfo: BankInfoStable) {
+    Text(
+        modifier = Modifier.fillMaxWidth(),
+        textAlign = TextAlign.Center,
+        text = stringResource(CommonString.text_important_information),
+        color = BinTheme.colors.accent,
+        style = BinTheme.typography.medium16
+    )
+    SpacerHeight(height = 25.dp)
+    CardInfo(
+        variant = CardInfoVariant.PRIMARY,
+        bankInfo = bankInfo
+    )
+    SpacerHeight(height = 25.dp)
 }
 
 @Preview(showBackground = true, showSystemUi = true)

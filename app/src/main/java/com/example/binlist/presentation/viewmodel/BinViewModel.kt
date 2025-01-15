@@ -1,5 +1,6 @@
 package com.example.binlist.presentation.viewmodel
 
+import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.binlist.core.common.ApiStatus
@@ -13,6 +14,7 @@ import com.example.binlist.presentation.mapper.BankInfoStableMapper
 import com.example.binlist.presentation.model.BankInfoStable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -43,22 +45,12 @@ class BinViewModel(
                             bankInfo.data?.let {
                                 addBankInfo(bankInfo = it)
                             }
+                            updateBankInfoState(state = BankInfoUiState.Success)
                         }
 
-                        ApiStatus.NO_DATA -> {
+                        else -> {
                             _errorMessage.tryEmit(value = bankInfo.message)
-                        }
-
-                        ApiStatus.BAD_REQUEST -> {
-                            _errorMessage.tryEmit(value = bankInfo.message)
-                        }
-
-                        ApiStatus.LIMIT -> {
-                            _errorMessage.tryEmit(value = bankInfo.message)
-                        }
-
-                        ApiStatus.ERROR -> {
-                            _errorMessage.tryEmit(value = bankInfo.message)
+                            updateBankInfoState(state = BankInfoUiState.Error)
                         }
                     }
                     updateButtonState(state = ButtonVariant.FILLED)
@@ -79,10 +71,14 @@ class BinViewModel(
     private val _errorMessage: MutableStateFlow<String?> = MutableStateFlow(null)
     private val errorMessage: StateFlow<String?> = _errorMessage
 
+    private val _bankInfoUIState: MutableStateFlow<BankInfoUiState?> = MutableStateFlow(null)
+    private val bankInfoUIState: StateFlow<BankInfoUiState?> = _bankInfoUIState
+
     fun getBankInfoFlow() = bankInfo
     fun getBinFlow() = bin
     fun getButtonStateFlow() = buttonState
     fun getErrorMessageFlow() = errorMessage
+    fun getBankInfoUIStateFlow() = bankInfoUIState
 
     fun loadBankInfo(bin: Bin) = viewModelScope.launch {
         updateButtonState(state = ButtonVariant.LOADING)
@@ -100,4 +96,16 @@ class BinViewModel(
     private fun updateButtonState(state: ButtonVariant) {
         _buttonState.update { state }
     }
+
+    private fun updateBankInfoState(state: BankInfoUiState) {
+        _bankInfoUIState.update { state }
+    }
+}
+
+@Stable
+sealed interface BankInfoUiState {
+
+    data object Success : BankInfoUiState
+
+    data object Error : BankInfoUiState
 }
