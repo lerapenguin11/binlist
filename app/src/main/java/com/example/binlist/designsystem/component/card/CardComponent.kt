@@ -1,11 +1,12 @@
 package com.example.binlist.designsystem.component.card
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.absoluteOffset
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -30,9 +31,11 @@ import com.example.binlist.utils.CommonString
 fun CardInfo(
     variant: CardInfoVariant,
     bankInfo: BankInfoStable,
-    modifier: Modifier = Modifier,
-    bin: String? = null
+    bin: String?,
+    modifier: Modifier = Modifier
 ) {
+    val arrayOfCardDetailsVariants = CardDetailsVariant.entries.toTypedArray()
+
     Card(
         colors = CardDefaults.cardColors(
             containerColor = if (variant == CardInfoVariant.PRIMARY)
@@ -43,89 +46,19 @@ fun CardInfo(
         Column(
             modifier = modifier.padding(all = if (variant == CardInfoVariant.SECONDARY) 24.dp else 0.dp)
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth()
+            LazyVerticalStaggeredGrid(
+                columns = StaggeredGridCells.Fixed(count = grid_count),
+                verticalItemSpacing = 30.dp,
             ) {
-                Box(modifier = Modifier.weight(5f)) {
+                items(items = arrayOfCardDetailsVariants, key = { item ->
+                    item.id
+                }) {
                     CardDetails(
-                        cardTitle = stringResource(CommonString.text_scheme_network),
-                        variant = CardDetailsVariant.FIRST,
+                        cardTitle = stringResource(it.title),
+                        variant = it,
                         bankInfo = bankInfo,
                         bin = bin
                     )
-                }
-                Box(modifier = Modifier.weight(5f)) {
-                    CardDetails(
-                        cardTitle = stringResource(CommonString.text_type),
-                        variant = CardDetailsVariant.SECOND,
-                        bankInfo = bankInfo,
-                        bin = bin
-                    )
-                }
-            }
-            SpacerHeight(height = 30.dp)
-            Row(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Box(modifier = Modifier.weight(5f)) {
-                    CardDetails(
-                        cardTitle = stringResource(CommonString.text_brand),
-                        variant = CardDetailsVariant.THIRD,
-                        bankInfo = bankInfo,
-                        bin = bin
-                    )
-                }
-                Box(modifier = Modifier.weight(5f)) {
-                    CardDetails(
-                        cardTitle = stringResource(CommonString.text_prepaid),
-                        variant = CardDetailsVariant.FOURTH,
-                        bankInfo = bankInfo,
-                        bin = bin
-                    )
-                }
-            }
-            SpacerHeight(height = 30.dp)
-            Row(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Box(modifier = Modifier.weight(5f)) {
-                    CardDetails(
-                        cardTitle = stringResource(CommonString.text_card_number),
-                        variant = CardDetailsVariant.FIFTH,
-                        bankInfo = bankInfo,
-                        bin = bin
-                    )
-                }
-                Box(modifier = Modifier.weight(5f)) {
-                    CardDetails(
-                        cardTitle = stringResource(CommonString.text_country),
-                        variant = CardDetailsVariant.SIXTH,
-                        bankInfo = bankInfo,
-                        bin = bin
-                    )
-                }
-            }
-            SpacerHeight(height = 30.dp)
-            Row(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Box(modifier = Modifier.weight(5f)) {
-                    CardDetails(
-                        cardTitle = stringResource(CommonString.text_bank),
-                        variant = CardDetailsVariant.SEVENTH,
-                        bankInfo = bankInfo,
-                        bin = bin
-                    )
-                }
-                if (variant == CardInfoVariant.SECONDARY) {
-                    Box(modifier = Modifier.weight(5f)) {
-                        CardDetails(
-                            cardTitle = stringResource(CommonString.text_bin),
-                            variant = CardDetailsVariant.EIGHTH,
-                            bankInfo = bankInfo,
-                            bin = bin
-                        )
-                    }
                 }
             }
         }
@@ -305,12 +238,14 @@ private fun CardPrimary(text: String) {
 }
 
 private const val no_data = "?"
+private const val grid_count = 2
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewCardDetails() {
     CardInfo(
         variant = CardInfoVariant.SECONDARY,
+        bin = "8787 7878",
         bankInfo = BankInfoStable(
             scheme = "Visa",
             type = "debit",

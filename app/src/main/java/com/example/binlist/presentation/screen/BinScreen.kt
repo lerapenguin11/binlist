@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +25,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.binlist.designsystem.component.button.ButtonVariant
 import com.example.binlist.designsystem.component.button.PrimaryButton
 import com.example.binlist.designsystem.component.card.CardInfo
 import com.example.binlist.designsystem.component.card.variant.CardInfoVariant
@@ -34,7 +32,6 @@ import com.example.binlist.designsystem.component.input.InputField
 import com.example.binlist.designsystem.component.spacer.SpacerHeight
 import com.example.binlist.designsystem.ui.theme.BinTheme
 import com.example.binlist.domain.model.bin.Bin
-import com.example.binlist.presentation.model.BankInfoStable
 import com.example.binlist.presentation.viewmodel.BinViewModel
 import com.example.binlist.utils.CommonString
 import org.koin.androidx.compose.koinViewModel
@@ -111,7 +108,8 @@ fun BinScreen(
                     SpacerHeight(height = 25.dp)
                     CardInfo(
                         variant = CardInfoVariant.PRIMARY,
-                        bankInfo = it
+                        bankInfo = it,
+                        bin = bin
                     )
                 }
             }

@@ -28,6 +28,7 @@ fun BinListScreen(
         }
         items(items = listOf(6), key = { it }) { bin ->
             CardInfo(
+                bin = "",
                 variant = CardInfoVariant.SECONDARY,
                 bankInfo = BankInfoStable(
                     scheme = "Visa",
