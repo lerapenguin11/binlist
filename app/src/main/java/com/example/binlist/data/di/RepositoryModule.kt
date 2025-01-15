@@ -5,5 +5,5 @@ import com.example.binlist.domain.repository.BankRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single<BankRepository> { BankRepositoryImpl(service = get(), get()) }
+    single<BankRepository> { BankRepositoryImpl(service = get(), mapper = get(), dao = get()) }
 }

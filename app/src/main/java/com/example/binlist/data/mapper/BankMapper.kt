@@ -1,7 +1,9 @@
 package com.example.binlist.data.mapper
 
+import com.example.binlist.core.database.entity.BankInfoEntity
 import com.example.binlist.core.network.response.BankInfoResponse
 import com.example.binlist.domain.model.bank.Bank
+import com.example.binlist.domain.model.bank.BankDetails
 import com.example.binlist.domain.model.bank.BankInfo
 import com.example.binlist.domain.model.bank.Country
 import com.example.binlist.domain.model.bank.Number
@@ -34,6 +36,44 @@ class BankMapper {
             scheme = bankInfo.scheme,
             type = bankInfo.type,
             bin = bin
+        )
+    }
+
+    fun bankInfoEntityToBankInfo(bankInfo: BankInfoEntity): BankDetails {
+        return BankDetails(
+            scheme = bankInfo.scheme,
+            type = bankInfo.type,
+            length = bankInfo.length,
+            lunh = bankInfo.lunh,
+            country = bankInfo.country,
+            phone = bankInfo.phone,
+            bankName = bankInfo.bankName,
+            city = bankInfo.city,
+            latitude = bankInfo.latitude,
+            longitude = bankInfo.longitude,
+            url = bankInfo.url,
+            brand = bankInfo.brand,
+            prepaid = bankInfo.prepaid,
+            bin = bankInfo.bin
+        )
+    }
+
+    fun bankInfoToBankInfoEntity(bankInfo: BankDetails): BankInfoEntity {
+        return BankInfoEntity(
+            scheme = bankInfo.scheme,
+            type = bankInfo.type,
+            length = bankInfo.length,
+            lunh = bankInfo.lunh,
+            country = bankInfo.country,
+            phone = bankInfo.phone,
+            bankName = bankInfo.bankName,
+            city = bankInfo.city,
+            latitude = bankInfo.latitude,
+            longitude = bankInfo.longitude,
+            url = bankInfo.url,
+            brand = bankInfo.brand,
+            prepaid = bankInfo.prepaid,
+            bin = bankInfo.bin
         )
     }
 }
