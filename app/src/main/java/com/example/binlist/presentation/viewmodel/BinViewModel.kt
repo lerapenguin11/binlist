@@ -92,16 +92,16 @@ class BinViewModel(
         }
     }
 
+    fun updateBin(bin: String) {
+        _bin.update { bin }
+    }
+
     private fun updateLastValueBin(bin: Bin) {
         _lastValueBin.update { bin }
     }
 
     private fun addBankInfo(bankInfo: BankInfo) = viewModelScope.launch {
         addBankInfoLocalUseCase.execute(bankInfo = bankInfo)
-    }
-
-    fun updateBin(bin: String) {
-        _bin.update { bin }
     }
 
     private fun updateButtonState(state: ButtonVariant) {

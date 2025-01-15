@@ -22,4 +22,5 @@
     <string name="text_country_longitude"><![CDATA[, longitude: ]]></string>
     <string name="text_right_parenthesis">)</string>
     <string name="database_name">bin_list</string>
+    <string name="text_cancel">Cancel</string>
 </resources>

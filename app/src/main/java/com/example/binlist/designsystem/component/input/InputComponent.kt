@@ -2,6 +2,7 @@ package com.example.binlist.designsystem.component.input
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -69,6 +70,22 @@ fun InputField(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Done
         ),
+        trailingIcon = {
+            when {
+                inputText.isNotEmpty() -> {
+                    IconButton(
+                        onClick = { onValueChange("") }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = CommonDrawables.ic_cancel),
+                            contentDescription = stringResource(
+                                CommonString.text_cancel
+                            )
+                        )
+                    }
+                }
+            }
+        }
     )
 }
 
