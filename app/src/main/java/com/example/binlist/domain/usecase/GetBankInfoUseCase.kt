@@ -9,15 +9,11 @@ import org.koin.core.component.inject
 
 class GetBankInfoUseCase {
     private val streamBankInfoFromBinParam: MutableSharedFlow<Bin?> = MutableStateFlow(null)
-    private var lastValue: Bin? = null
 
     fun loadBankInfo(
         bin: Bin
     ) {
-        if (lastValue?.bin != bin.bin) {
-            lastValue = bin
-            streamBankInfoFromBinParam.tryEmit(value = bin)
-        }
+        streamBankInfoFromBinParam.tryEmit(value = bin)
     }
 
     fun trigger(): SharedFlow<Bin?> =
