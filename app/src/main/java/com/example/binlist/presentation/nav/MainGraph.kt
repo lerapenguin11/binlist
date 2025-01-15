@@ -37,7 +37,7 @@ fun MainGraph(
                     icon = CommonDrawables.ic_list,
                     contentDescription = CommonString.text_list
                 ) {
-                    //TODO
+                    navController.navigate(route = Main.BinList.route)
                 }
             })
             BinScreen(contentPadding = contentPadding)

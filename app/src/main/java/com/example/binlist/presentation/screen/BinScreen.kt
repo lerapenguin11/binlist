@@ -111,6 +111,7 @@ fun BinScreen(
                         bankInfo = it,
                         bin = bin
                     )
+                    SpacerHeight(height = 25.dp)
                 }
             }
         }

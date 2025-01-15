@@ -3,6 +3,8 @@ package com.example.binlist.designsystem.component.card
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.absoluteOffset
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
@@ -47,8 +49,11 @@ fun CardInfo(
             modifier = modifier.padding(all = if (variant == CardInfoVariant.SECONDARY) 24.dp else 0.dp)
         ) {
             LazyVerticalStaggeredGrid(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 400.dp),
                 columns = StaggeredGridCells.Fixed(count = grid_count),
-                verticalItemSpacing = 30.dp,
+                verticalItemSpacing = 30.dp
             ) {
                 items(items = arrayOfCardDetailsVariants, key = { item ->
                     item.id
@@ -59,9 +64,6 @@ fun CardInfo(
                         bankInfo = bankInfo,
                         bin = bin
                     )
-                    if (it.id == arrayOfCardDetailsVariants.size - 1){
-                        SpacerHeight(height = 30.dp)
-                    }
                 }
             }
         }
