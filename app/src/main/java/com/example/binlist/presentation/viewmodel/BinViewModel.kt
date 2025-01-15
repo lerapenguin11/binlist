@@ -2,10 +2,8 @@ package com.example.binlist.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.binlist.core.common.ApiResult
 import com.example.binlist.core.common.ApiStatus
 import com.example.binlist.designsystem.component.button.ButtonVariant
-import com.example.binlist.domain.model.bank.BankInfo
 import com.example.binlist.domain.model.bin.Bin
 import com.example.binlist.domain.usecase.GetBankInfo
 import com.example.binlist.domain.usecase.InteractorLoadBankInfo
@@ -40,15 +38,19 @@ class BinViewModel(
                                 )
                             })
                         }
+
                         ApiStatus.NO_DATA -> {
                             _errorMessage.tryEmit(value = bankInfo.message)
                         }
+
                         ApiStatus.BAD_REQUEST -> {
                             _errorMessage.tryEmit(value = bankInfo.message)
                         }
+
                         ApiStatus.LIMIT -> {
                             _errorMessage.tryEmit(value = bankInfo.message)
                         }
+
                         ApiStatus.ERROR -> {
                             _errorMessage.tryEmit(value = bankInfo.message)
                         }
@@ -85,7 +87,7 @@ class BinViewModel(
         _bin.update { bin }
     }
 
-    fun updateButtonState(state: ButtonVariant) {
+    private fun updateButtonState(state: ButtonVariant) {
         _buttonState.update { state }
     }
 }
