@@ -92,8 +92,13 @@ fun BinScreen(
                 bankUiState?.let { uiState ->
                     when (uiState) {
                         BankInfoUiState.Success -> {
-                            bankInfo?.let {
-                                BankInfoBlock(bankInfo = it)
+                            bankInfo?.let { bankInfoStable ->
+                                BankInfoBlock(
+                                    bankInfo = bankInfoStable,
+                                    onClickUrl = {
+                                        binViewModel.openUrl(url = it)
+                                    }
+                                )
                             }
                         }
 
@@ -121,7 +126,10 @@ private fun ErrorMessageBlock(text: String) {
 }
 
 @Composable
-private fun BankInfoBlock(bankInfo: BankInfoStable) {
+private fun BankInfoBlock(
+    bankInfo: BankInfoStable,
+    onClickUrl: (String) -> Unit
+) {
     Text(
         modifier = Modifier.fillMaxWidth(),
         textAlign = TextAlign.Center,
@@ -132,7 +140,10 @@ private fun BankInfoBlock(bankInfo: BankInfoStable) {
     SpacerHeight(height = 25.dp)
     CardInfo(
         variant = CardInfoVariant.PRIMARY,
-        bankInfo = bankInfo
+        bankInfo = bankInfo,
+        onClickUrl = {
+            onClickUrl(it)
+        }
     )
     SpacerHeight(height = 25.dp)
 }

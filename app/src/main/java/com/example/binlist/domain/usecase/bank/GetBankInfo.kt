@@ -1,4 +1,4 @@
-package com.example.binlist.domain.usecase
+package com.example.binlist.domain.usecase.bank
 
 import com.example.binlist.core.common.ApiResult
 import com.example.binlist.domain.model.bank.BankInfo

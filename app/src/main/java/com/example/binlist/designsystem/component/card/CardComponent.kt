@@ -1,5 +1,6 @@
 package com.example.binlist.designsystem.component.card
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.absoluteOffset
@@ -15,6 +16,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -26,7 +28,6 @@ import com.example.binlist.designsystem.component.card.variant.CardInfoVariant
 import com.example.binlist.designsystem.component.spacer.SpacerHeight
 import com.example.binlist.designsystem.component.utils.formatString
 import com.example.binlist.designsystem.ui.theme.BinTheme
-import com.example.binlist.presentation.model.BankDetailsStable
 import com.example.binlist.presentation.model.BankInfoStable
 import com.example.binlist.utils.CommonString
 
@@ -34,7 +35,8 @@ import com.example.binlist.utils.CommonString
 fun CardInfo(
     variant: CardInfoVariant,
     bankInfo: BankInfoStable,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClickUrl: (String) -> Unit
 ) {
     val arrayOfCardDetailsVariants = CardDetailsVariant.entries.toTypedArray()
 
@@ -62,7 +64,10 @@ fun CardInfo(
                         cardTitle = stringResource(it.title),
                         variant = it,
                         bankInfo = bankInfo,
-                        bin = bankInfo.bin
+                        bin = bankInfo.bin,
+                        onClickUrl = {
+                            onClickUrl(it)
+                        }
                     )
                 }
             }
@@ -75,7 +80,8 @@ fun CardDetails(
     variant: CardDetailsVariant,
     cardTitle: String,
     bankInfo: BankInfoStable,
-    bin: String?
+    bin: String?,
+    onClickUrl: (String) -> Unit
 ) {
     Column {
         Text(
@@ -120,7 +126,10 @@ fun CardDetails(
                     phone = bankInfo.phone,
                     nameBank = bankInfo.bankName ?: no_data,
                     city = bankInfo.city ?: no_data,
-                    url = bankInfo.url
+                    url = bankInfo.url,
+                    onClickUrl = {
+                        onClickUrl(it)
+                    }
                 )
             }
 
@@ -147,7 +156,8 @@ private fun CardQuaternary(
     phone: String?,
     url: String?,
     nameBank: String,
-    city: String
+    city: String,
+    onClickUrl: (String) -> Unit
 ) {
     Text(
         text = "${nameBank}, $city",
@@ -162,9 +172,12 @@ private fun CardQuaternary(
             style = BinTheme.typography.regular12
         )
     }
-    SpacerHeight(height = 2.dp)
     url?.let {
         Text(
+            modifier = Modifier
+                .clickable { onClickUrl(it) }
+                .clip(RoundedCornerShape(4.dp))
+                .padding(2.dp),
             text = it,
             color = BinTheme.colors.primary,
             style = BinTheme.typography.regular12
@@ -267,5 +280,7 @@ fun PreviewCardDetails() {
             bin = "8787 7878",
             id = 0
         )
-    )
+    ){
+
+    }
 }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -35,7 +36,10 @@ fun BinListScreen(
         items(items = bankInfoList, key = { it.id }) { infoStable ->
             CardInfo(
                 variant = CardInfoVariant.SECONDARY,
-                bankInfo = infoStable
+                bankInfo = infoStable,
+                onClickUrl = {
+                    binListViewModel.openUrl(url = it)
+                }
             )
             SpacerHeight(height = 20.dp)
         }

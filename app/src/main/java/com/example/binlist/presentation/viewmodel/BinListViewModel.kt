@@ -2,7 +2,8 @@ package com.example.binlist.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.binlist.domain.usecase.GetBankInfoLocalUseCase
+import com.example.binlist.domain.usecase.OpenUrlUseCase
+import com.example.binlist.domain.usecase.bank.GetBankInfoLocalUseCase
 import com.example.binlist.presentation.mapper.BankInfoStableMapper
 import com.example.binlist.presentation.model.BankInfoStable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,7 +15,8 @@ import kotlinx.coroutines.flow.stateIn
 
 class BinListViewModel(
     private val getBankInfoLocalUseCase: GetBankInfoLocalUseCase,
-    private val mapper: BankInfoStableMapper
+    private val mapper: BankInfoStableMapper,
+    private val openUrlUseCase: OpenUrlUseCase
 ) : ViewModel() {
     @OptIn(ExperimentalCoroutinesApi::class)
     private val bankInfo: StateFlow<List<BankInfoStable>> =
@@ -32,4 +34,8 @@ class BinListViewModel(
         )
 
     fun getBankInfoFlow() = bankInfo
+
+    fun openUrl(url: String) {
+        openUrlUseCase.execute(url = url)
+    }
 }

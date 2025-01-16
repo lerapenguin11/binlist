@@ -7,9 +7,10 @@ import com.example.binlist.core.common.ApiStatus
 import com.example.binlist.designsystem.component.button.ButtonVariant
 import com.example.binlist.domain.model.bank.BankInfo
 import com.example.binlist.domain.model.bin.Bin
-import com.example.binlist.domain.usecase.AddBankInfoLocalUseCase
-import com.example.binlist.domain.usecase.GetBankInfo
-import com.example.binlist.domain.usecase.InteractorLoadBankInfo
+import com.example.binlist.domain.usecase.OpenUrlUseCase
+import com.example.binlist.domain.usecase.bank.AddBankInfoLocalUseCase
+import com.example.binlist.domain.usecase.bank.GetBankInfo
+import com.example.binlist.domain.usecase.bank.InteractorLoadBankInfo
 import com.example.binlist.presentation.mapper.BankInfoStableMapper
 import com.example.binlist.presentation.model.BankInfoStable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,7 +27,8 @@ class BinViewModel(
     private val loadBankInfo: InteractorLoadBankInfo,
     private val getBankInfo: GetBankInfo,
     private val mapper: BankInfoStableMapper,
-    private val addBankInfoLocalUseCase: AddBankInfoLocalUseCase
+    private val addBankInfoLocalUseCase: AddBankInfoLocalUseCase,
+    private val openUrlUseCase: OpenUrlUseCase
 ) : ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -94,6 +96,10 @@ class BinViewModel(
 
     fun updateBin(bin: String) {
         _bin.update { bin }
+    }
+
+    fun openUrl(url: String) {
+        openUrlUseCase.execute(url = url)
     }
 
     private fun updateLastValueBin(bin: Bin) {
