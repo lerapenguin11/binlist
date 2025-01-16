@@ -97,6 +97,9 @@ fun BinScreen(
                                     bankInfo = bankInfoStable,
                                     onClickUrl = {
                                         binViewModel.openUrl(url = it)
+                                    },
+                                    onClickPhoneNumber = {
+                                        binViewModel.openDialer(phoneNumber = it)
                                     }
                                 )
                             }
@@ -128,7 +131,8 @@ private fun ErrorMessageBlock(text: String) {
 @Composable
 private fun BankInfoBlock(
     bankInfo: BankInfoStable,
-    onClickUrl: (String) -> Unit
+    onClickUrl: (String) -> Unit,
+    onClickPhoneNumber: (String) -> Unit
 ) {
     Text(
         modifier = Modifier.fillMaxWidth(),
@@ -143,6 +147,9 @@ private fun BankInfoBlock(
         bankInfo = bankInfo,
         onClickUrl = {
             onClickUrl(it)
+        },
+        onClickPhoneNumber = {
+            onClickPhoneNumber(it)
         }
     )
     SpacerHeight(height = 25.dp)

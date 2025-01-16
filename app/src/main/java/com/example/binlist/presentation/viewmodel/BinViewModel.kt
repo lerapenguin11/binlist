@@ -7,6 +7,7 @@ import com.example.binlist.core.common.ApiStatus
 import com.example.binlist.designsystem.component.button.ButtonVariant
 import com.example.binlist.domain.model.bank.BankInfo
 import com.example.binlist.domain.model.bin.Bin
+import com.example.binlist.domain.usecase.OpenDialerUseCase
 import com.example.binlist.domain.usecase.OpenUrlUseCase
 import com.example.binlist.domain.usecase.bank.AddBankInfoLocalUseCase
 import com.example.binlist.domain.usecase.bank.GetBankInfo
@@ -28,7 +29,8 @@ class BinViewModel(
     private val getBankInfo: GetBankInfo,
     private val mapper: BankInfoStableMapper,
     private val addBankInfoLocalUseCase: AddBankInfoLocalUseCase,
-    private val openUrlUseCase: OpenUrlUseCase
+    private val openUrlUseCase: OpenUrlUseCase,
+    private val openDialerUseCase: OpenDialerUseCase
 ) : ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -100,6 +102,10 @@ class BinViewModel(
 
     fun openUrl(url: String) {
         openUrlUseCase.execute(url = url)
+    }
+
+    fun openDialer(phoneNumber: String) = viewModelScope.launch {
+        openDialerUseCase.execute(phoneNumber = phoneNumber)
     }
 
     private fun updateLastValueBin(bin: Bin) {

@@ -21,7 +21,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.binlist.designsystem.component.card.variant.CardDetailsVariant
 import com.example.binlist.designsystem.component.card.variant.CardInfoVariant
@@ -36,7 +35,8 @@ fun CardInfo(
     variant: CardInfoVariant,
     bankInfo: BankInfoStable,
     modifier: Modifier = Modifier,
-    onClickUrl: (String) -> Unit
+    onClickUrl: (String) -> Unit,
+    onClickPhoneNumber: (String) -> Unit
 ) {
     val arrayOfCardDetailsVariants = CardDetailsVariant.entries.toTypedArray()
 
@@ -65,8 +65,11 @@ fun CardInfo(
                         variant = it,
                         bankInfo = bankInfo,
                         bin = bankInfo.bin,
-                        onClickUrl = {
-                            onClickUrl(it)
+                        onClickUrl = { url ->
+                            onClickUrl(url)
+                        },
+                        onClickPhoneNumber = { phoneNumber ->
+                            onClickPhoneNumber(phoneNumber)
                         }
                     )
                 }
@@ -81,7 +84,8 @@ fun CardDetails(
     cardTitle: String,
     bankInfo: BankInfoStable,
     bin: String?,
-    onClickUrl: (String) -> Unit
+    onClickUrl: (String) -> Unit,
+    onClickPhoneNumber: (String) -> Unit
 ) {
     Column {
         Text(
@@ -129,6 +133,9 @@ fun CardDetails(
                     url = bankInfo.url,
                     onClickUrl = {
                         onClickUrl(it)
+                    },
+                    onClickPhoneNumber = {
+                            onClickPhoneNumber(it)
                     }
                 )
             }
@@ -157,7 +164,8 @@ private fun CardQuaternary(
     url: String?,
     nameBank: String,
     city: String,
-    onClickUrl: (String) -> Unit
+    onClickUrl: (String) -> Unit,
+    onClickPhoneNumber: (String) -> Unit
 ) {
     Text(
         text = "${nameBank}, $city",
@@ -167,6 +175,10 @@ private fun CardQuaternary(
     SpacerHeight(height = 2.dp)
     phone?.let {
         Text(
+            modifier = Modifier
+                .clickable { onClickPhoneNumber(it) }
+                .clip(RoundedCornerShape(4.dp))
+                .padding(2.dp),
             text = it,
             color = Color.Black,
             style = BinTheme.typography.regular12
@@ -257,30 +269,3 @@ private fun CardPrimary(text: String) {
 
 private const val no_data = "?"
 private const val grid_count = 2
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewCardDetails() {
-    CardInfo(
-        variant = CardInfoVariant.SECONDARY,
-        bankInfo = BankInfoStable(
-            scheme = "Visa",
-            type = "debit",
-            length = 16,
-            lunh = true,
-            country = "\uD83C\uDDE9\uD83C\uDDF0 Denmark",
-            phone = "+4589893300",
-            bankName = "Jyske Bank",
-            city = "Hjørring",
-            latitude = 56,
-            longitude = 56,
-            url = "www.jyskebank.dk",
-            brand = null,
-            prepaid = false,
-            bin = "8787 7878",
-            id = 0
-        )
-    ){
-
-    }
-}

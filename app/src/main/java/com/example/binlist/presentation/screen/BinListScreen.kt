@@ -38,6 +38,9 @@ fun BinListScreen(
                 bankInfo = infoStable,
                 onClickUrl = {
                     binListViewModel.openUrl(url = it)
+                },
+                onClickPhoneNumber = {
+                    binListViewModel.openDialer(phoneNumber = it)
                 }
             )
             SpacerHeight(height = 20.dp)
